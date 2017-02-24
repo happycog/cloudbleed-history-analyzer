@@ -1,0 +1,20 @@
+{
+  "name": "CloudflareHistoryChecker",
+  "version": "0.1.0",
+  "main": "main.js",
+  "scripts": {
+    "dev": "electron . --enable-logging",
+    "clean": "rm -rf ./dist",
+    "pack": "npm run clean && electron-packager . \"Cloudflare History Checker\" --out=dist/osx --platform=darwin --arch=x64 --ignore=dist --ignore=README.md --ignore=.gitignore",
+    "postinstall": "install-app-deps"
+  },
+  "devDependencies": {
+    "electron": "^1.4.15",
+    "electron-builder": "^14.1.1",
+    "electron-packager": "^8.5.2"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "sqlite3": "^3.1.8"
+  }
+}
