@@ -4,6 +4,9 @@ const url = require('url')
 const sqlite3 = require('sqlite3');
 const fs = require('fs');
 const Promise = require('bluebird');
+const request = require('request');
+
+Promise.promisifyAll(require("request"));
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -54,6 +57,10 @@ app.on('activate', () => {
   }
 })
 
+
+// // // // // // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // // // // // //
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
@@ -93,20 +100,47 @@ var readDb = function() {
     });
 }
 
-var parseDbRows = function(rows) {
+var isHostUsingCloudFlare = function(url) {
+    return request.getAsync({
+        method: 'head',
+        url: url,
+        timeout: 3000,
+    })
+    .then(function(response) {
+        return Object.keys(response.headers).indexOf('cf-ray') !== -1 ? url : false;
+    })
+    .catch(function(err) {
+        // console.log(err);
+    });
+}
+
+var parseHistoryForUniqueHostnames = function(rows) {
     let hostnames = [];
+    var hostChecks = [];
     return new Promise(function(resolve, reject) {
         for (var i = 0; i < rows.length; i++) {
             var hostname = url.parse(rows[i].url).hostname;
-            if (hostnames.indexOf(hostname)===-1) hostnames.push(hostname);
+            if (hostnames.indexOf(hostname)===-1) {
+                hostnames.push(hostname);
+                hostChecks.push(isHostUsingCloudFlare('http://' + hostname));
+                hostChecks.push(isHostUsingCloudFlare('https://' + hostname));
+            }
+            // if (i===500) break;
         }
-        console.log(hostnames);
-        resolve(hostnames);
+        resolve(hostChecks);
+    });
+}
+
+var determineCloudFlareHosts = function(hostChecks) {
+    var cloudFlareHosts = [];
+    return Promise.each(hostChecks, function(host) {
+        if (!host || host===false) return;
+        cloudFlareHosts.push(url.parse(host).hostname);
     });
 }
 
 var clerTempDb = function() {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function( resolve, reject) {
         fs.unlink(dbTempPath, function(err) {
             resolve();
         });
@@ -115,5 +149,6 @@ var clerTempDb = function() {
 
 copyDb()
     .then(readDb)
-    .then(parseDbRows)
+    .then(parseHistoryForUniqueHostnames)
+    .then(determineCloudFlareHosts)
     .then(clerTempDb);
