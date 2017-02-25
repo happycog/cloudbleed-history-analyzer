@@ -3,14 +3,20 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <style>
+      #progress {
+        margin: 20px;
+        width: 200px;
+        height: 100px;
+      }
+    </style>
   </head>
   <body>
     <h1>CloudFlare History Checker</h1>
     <h3>by Vector Media Group</h3>
-    <code>
-        We are using node <script>document.write(process.versions.node)</script>,
-        Chrome <script>document.write(process.versions.chrome)</script>,
-        and Electron <script>document.write(process.versions.electron)</script>.
-    </code>
+    <div id="progress"></div>
+    <p id="msg"></p>
+    <ul id="report"></ul>
+    <script src="browser.js"></script>
   </body>
 </html>
