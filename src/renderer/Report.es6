@@ -27,6 +27,7 @@ class Report extends React.Component {
 
         return (
             <div>
+                <hr />
                 <h3>Sites you have visited that use CloudFlare:</h3>
                 <p>If you have an account with any of these sites, you should change your password.</p>
                 <table className="table-striped">

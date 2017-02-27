@@ -7,8 +7,7 @@
     "electron": "electron . --enable-logging",
     "dev": "npm run webpack && npm run electron",
     "clean": "rm -rf ./dist",
-    "css": "npm-css css/src.css > css/main.css",
-    "pack": "npm run clean && electron-packager . \"Cloudflare History Checker\" --out=dist/osx --platform=darwin --arch=x64 --ignore=dist --ignore=README.md --ignore=.gitignore",
+    "pack": "npm run clean && electron-packager . \"Cloudflare History Checker\" --out=dist/osx --platform=darwin --arch=x64 --ignore=dist --ignore=README.md --ignore=.gitignore --icon=img/vector.icns --prune=true",
     "postinstall": "install-app-deps"
   },
   "devDependencies": {
@@ -30,7 +29,6 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "request": "^2.79.0",
-    "sqlite3": "^3.1.8",
-    "underscore": "^1.8.3"
+    "sqlite3": "^3.1.8"
   }
 }

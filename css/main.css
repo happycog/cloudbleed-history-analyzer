@@ -4,6 +4,15 @@ a {
     cursor: pointer;
 }
 
+h2 {
+    margin: 0;
+}
+.tagline {
+    font-style: italic;
+    margin: 0;
+    font-weight: 700;
+}
+
 #progress {
     margin: 20px auto;
     width: 80%;
