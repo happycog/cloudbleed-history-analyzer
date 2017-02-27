@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, shell} = require('electron');
 const path = require('path');
 const url = require('url');
 const sqlite3 = require('sqlite3');
@@ -70,6 +70,7 @@ let initApp = () => {
             return Object.keys(response.headers).indexOf('cf-ray') !== -1 ? true : false;
         })
         .catch(function(err) {
+            return false;
         });
     };
 
@@ -100,20 +101,22 @@ let initApp = () => {
             win.webContents.send('updateCounter', percentComplete);
             return isHostUsingCloudFlare(host).then((isCloudFlare) => {
                 if (isCloudFlare) {
-                    let report = url.parse(host).hostname;
+                    let report = url.parse(host).hostname.replace(/^www\./, '');
                     if (this.cloudFlareHosts.indexOf(report)===-1) {
                         this.cloudFlareHosts.push(report);
                     }
                 }
-                Promise.resolve();
+                promise.resolve();
             });
         }, { concurrency: 100 });
     };
 
     var reportToRenderer = () => {
         this.cloudFlareHosts.sort();
-        return new Promise((resolve, reject) => {
+        return new promise((resolve, reject) => {
+            console.log('reportToRenderer');
             win.webContents.send('reportHosts', this.cloudFlareHosts);
+            resolve();
         });
     };
 
@@ -151,28 +154,27 @@ let createWindow = () => {
   // Open the DevTools.
   // win.webContents.openDevTools();
 
+  let handleRedirect = (e, url) => {
+    if(url != win.webContents.getURL()) {
+      e.preventDefault()
+      shell.openExternal(url)
+    }
+  }
+  win.webContents.on('will-navigate', handleRedirect)
+  win.webContents.on('new-window', handleRedirect)
+
   // Emitted when the window is closed.
   win.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     win = null;
   });
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
-app.on('ready', initApp);
 
-// Quit when all windows are closed.
 app.on('window-all-closed', () => {
     app.quit();
 });
 
-app.on('activate', () => {
-    if (win === null) {
-        createWindow();
-    }
+ipcMain.on('begin', function(event) {
+    initApp();
 });
