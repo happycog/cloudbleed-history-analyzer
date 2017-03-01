@@ -114,7 +114,6 @@ let initApp = () => {
     var reportToRenderer = () => {
         this.cloudFlareHosts.sort();
         return new promise((resolve, reject) => {
-            console.log('reportToRenderer');
             win.webContents.send('reportHosts', this.cloudFlareHosts);
             resolve();
         });
