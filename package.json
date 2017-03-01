@@ -7,7 +7,8 @@
     "electron": "electron . --enable-logging",
     "dev": "npm run webpack && npm run electron",
     "clean": "rm -rf ./dist",
-    "pack": "npm run clean && electron-packager . \"Cloudflare History Checker\" --out=dist/osx --platform=darwin --arch=x64 --ignore=dist --ignore=README.md --ignore=.gitignore --icon=img/vector.icns --prune=true",
+    "pack": "npm run clean && electron-packager . \"Cloudflare History Checker\" --out=dist/osx --platform=darwin --arch=x64 --ignore=dist --ignore=README.md --ignore=.gitignore --icon=img/vector.icns --prune=true --app-bundle-id='com.vectormediagroup.cloudflarevulnerabilityhistoryanalyzer' --app-version='1.0.0' --build-version='1.0.0'",
+    "sign": "electron-osx-sign 'dist/osx/Cloudflare History Checker-darwin-x64/Cloudflare History Checker.app'",
     "postinstall": "install-app-deps"
   },
   "devDependencies": {
@@ -20,6 +21,7 @@
     "babel-register": "^6.23.0",
     "electron": "^1.4.15",
     "electron-builder": "^14.1.1",
+    "electron-osx-sign": "^0.4.3",
     "electron-packager": "^8.5.2",
     "webpack": "^2.2.1"
   },
