@@ -28,4 +28,4 @@ npm run dev
 App and code by [@abenjaminsmith](https://twitter.com/abenjaminsmith), idea from [@mrw](https://twitter.com/mrw), proof of concept by [@kamaljoshi](https://gist.github.com/kamaljoshi/2cce5f6d35cd28de8f6dbb27d586f064).
 ## License
 
-TODO
+View the license [here](LICENSE.md).
