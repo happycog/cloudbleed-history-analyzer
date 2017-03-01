@@ -2,7 +2,7 @@
 
 > ### [Download Latest Version (OSX / macOS only)](https://github.com/vector/cloudbleed-history-analyzer/releases/download/latest/CloudflareHistoryAnalyzer.app.zip)
 
-On February 17, 2017, the "CloudBleed" security bug was discovered. This bug affected CloudFlare's CDN product, which is used by millions of websites. For any websites that use CloudFlare, it is possible that users' private data may have been exposed to the public, including passwords, personally identifiable information, credit card numbers, etc. That data was also stored in search engine caches for some time after the bug was discovered, greatly amplifying the impact of this bug. Read more about [CloudBleed on Wikipedia](https://en.wikipedia.org/wiki/Cloudbleed)
+On February 17, 2017, the "CloudBleed" security bug was discovered. This bug affected CloudFlare's CDN product, which is used by millions of websites. For any websites that use CloudFlare, it is possible that users' private data may have been exposed to the public, including passwords, personally identifiable information, credit card numbers, etc. That data was also stored in search engine caches for some time after the bug was discovered, greatly amplifying the impact of this bug. Read more about [CloudBleed on Wikipedia](https://en.wikipedia.org/wiki/Cloudbleed).
 
 We recommend you change your password for any site that uses CloudFlare. This tool will analyze your Chrome browser history and report which sites you have visited that use CloudFlare so you can change your passwords.
 
@@ -23,6 +23,9 @@ npm install
 npm run dev
 ```
 
+## Credits
+
+App and code by [@abenjaminsmith](https://twitter.com/abenjaminsmith), idea from [@mrw](https://twitter.com/mrw), proof of concept by [@kamaljoshi](https://gist.github.com/kamaljoshi/2cce5f6d35cd28de8f6dbb27d586f064).
 ## License
 
 TODO
