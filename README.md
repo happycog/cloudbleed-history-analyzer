@@ -1,6 +1,6 @@
 # CloudFlare Vulnerability History Analyzer
 
-> ### [Download Latest Version (OSX / macOS only)](https://github.com/vector/cloudbleed-history-analyzer/releases/latest)
+> ### [Download Latest Version (OSX / macOS only)](https://github.com/vector/cloudbleed-history-analyzer/releases/download/v1.0.0/CloudflareHistoryAnalyzer.app.zip)
 
 On February 17, 2017, the "CloudBleed" security bug was discovered. This bug affected CloudFlare's CDN product, which is used by millions of websites. For any websites that use CloudFlare, it is possible that users' private data may have been exposed to the public, including passwords, personally identifiable information, credit card numbers, etc. That data was also stored in search engine caches for some time after the bug was discovered, greatly amplifying the impact of this bug. Read more about [CloudBleed on Wikipedia](https://en.wikipedia.org/wiki/Cloudbleed).
 
